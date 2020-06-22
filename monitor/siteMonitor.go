@@ -4,7 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 )
+
+const monitoramentos = 3
+const delay = 10
 
 func main() {
 
@@ -64,19 +68,36 @@ func sairPrograma() {
 func iniciarMonitoramento() {
 	// to do
 	fmt.Println("iniciando monitoramento...")
-	url := "https://www.alura.com.br"
-	resp, _ := http.Get(url)
-	//fmt.Println("Resposta", resp)
 
-	if resp.StatusCode == 200 {
-		fmt.Println("Site", url, "foi carregado com sucesso")
-	} else {
-		fmt.Println("Erro ao carregar o site", url)
+	urls := []string{"https://www.alura.com.br", "https://random-status-code.herokuapp.com/", "https://www.google.com/"}
+
+	for i := 0; i < monitoramentos; i++ {
+
+		for i, url := range urls {
+			fmt.Println("Testando o site", i, ":", url)
+			testarUrls(url)
+		}
+
+		fmt.Println("--------------------------------------------------------------------")
+		time.Sleep(delay * time.Second)
 	}
+
 }
 
 func exibirLogs() {
 	// to do
 	fmt.Println("Exibindo Logs")
 
+}
+
+func testarUrls(url string) {
+	resp, _ := http.Get(url)
+
+	if resp.StatusCode == 200 {
+		fmt.Println("Site", url, "foi carregado com sucesso")
+	} else {
+		fmt.Println("Erro ao carregar o site", url, "Codigo de erro ", resp.StatusCode)
+	}
+
+	fmt.Println()
 }
