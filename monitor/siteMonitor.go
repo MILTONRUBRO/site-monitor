@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -69,7 +72,9 @@ func iniciarMonitoramento() {
 	// to do
 	fmt.Println("iniciando monitoramento...")
 
-	urls := []string{"https://www.alura.com.br", "https://random-status-code.herokuapp.com/", "https://www.google.com/"}
+	//urls := []string{"https://www.alura.com.br", "https://random-status-code.herokuapp.com/", "https://www.google.com/"}
+
+	urls := lerUrlsDeArquivo()
 
 	for i := 0; i < monitoramentos; i++ {
 
@@ -91,7 +96,11 @@ func exibirLogs() {
 }
 
 func testarUrls(url string) {
-	resp, _ := http.Get(url)
+	resp, err := http.Get(url)
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro", err)
+	}
 
 	if resp.StatusCode == 200 {
 		fmt.Println("Site", url, "foi carregado com sucesso")
@@ -100,4 +109,40 @@ func testarUrls(url string) {
 	}
 
 	fmt.Println()
+}
+
+func lerUrlsDeArquivo() []string {
+
+	var urls []string
+
+	//arquivo, err := ioutil.ReadFile("urls.txt")
+
+	arquivo, err := os.Open("urls.txt")
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro", err)
+	}
+
+	leitor := bufio.NewReader(arquivo)
+
+	for {
+
+		linha, err := leitor.ReadString('\n')
+		linha = strings.TrimSpace(linha)
+
+		urls = append(urls, linha)
+
+		if err != nil {
+			fmt.Println("Ocorreu um erro na leitura do arquivo", err)
+		}
+
+		if err == io.EOF {
+			break
+		}
+	}
+
+	//fechando arquivo
+	arquivo.Close()
+
+	return urls
 }
