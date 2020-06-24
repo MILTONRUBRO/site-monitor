@@ -4,8 +4,10 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -90,9 +92,13 @@ func iniciarMonitoramento() {
 }
 
 func exibirLogs() {
-	// to do
-	fmt.Println("Exibindo Logs")
+	arquivo, err := ioutil.ReadFile("log.txt")
 
+	if err != nil {
+		fmt.Println("Ocorreu um erro", err)
+	}
+
+	fmt.Println(string(arquivo))
 }
 
 func testarUrls(url string) {
@@ -104,8 +110,10 @@ func testarUrls(url string) {
 
 	if resp.StatusCode == 200 {
 		fmt.Println("Site", url, "foi carregado com sucesso")
+		registrarLog(url, true)
 	} else {
 		fmt.Println("Erro ao carregar o site", url, "Codigo de erro ", resp.StatusCode)
+		registrarLog(url, false)
 	}
 
 	fmt.Println()
@@ -145,4 +153,18 @@ func lerUrlsDeArquivo() []string {
 	arquivo.Close()
 
 	return urls
+}
+
+func registrarLog(url string, status bool) {
+
+	arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro")
+	}
+
+	arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + url + "- Online: " + strconv.FormatBool(status) + "\n")
+
+	arquivo.Close()
+
 }

@@ -1,0 +1,18 @@
+https://www.alura.com.br- Online: true
+https://random-status-code.herokuapp.com/- Online: true
+https://www.google.com/- Online: true
+https://www.alura.com.br- Online: true
+https://random-status-code.herokuapp.com/- Online: true
+https://www.google.com/- Online: true
+https://www.alura.com.br- Online: true
+https://random-status-code.herokuapp.com/- Online: true
+https://www.google.com/- Online: true
+23/06/2020 22:52:55 - https://www.alura.com.br- Online: true
+23/06/2020 22:52:56 - https://random-status-code.herokuapp.com/- Online: false
+23/06/2020 22:52:56 - https://www.google.com/- Online: true
+23/06/2020 22:53:07 - https://www.alura.com.br- Online: true
+23/06/2020 22:53:08 - https://random-status-code.herokuapp.com/- Online: false
+23/06/2020 22:53:08 - https://www.google.com/- Online: true
+23/06/2020 22:53:18 - https://www.alura.com.br- Online: true
+23/06/2020 22:53:19 - https://random-status-code.herokuapp.com/- Online: false
+23/06/2020 22:53:19 - https://www.google.com/- Online: true
